@@ -1,0 +1,19 @@
+title: "グラフDB・GraphRAG・GNN ローカル環境ハンズオン"
+summary: "Neo4j（Docker）、LlamaIndex + OpenAI による GraphRAG、PyTorch Geometric による GNN を、映画レコメンドという一貫したテーマで体験する実践ガイドです。グラフ技術・機械学習の経験ゼロから、3つの技術を手を動かしながら学べます。"
+topics: ["neo4j", "graphrag", "gnn", "python", "llm"]
+published: false
+price: 0
+toc_depth: 2
+chapters:
+  - 00_preface
+  - 01_concepts
+  - 02_setup
+  - 03_neo4j_basics
+  - 04_neo4j_advanced
+  - 05_graphrag_concepts
+  - 06_graphrag_build
+  - 07_graphrag_query
+  - 08_gnn_concepts
+  - 09_gnn_build
+  - 10_gnn_train
+  - 11_wrapup
