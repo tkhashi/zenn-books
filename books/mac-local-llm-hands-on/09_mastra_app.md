@@ -264,7 +264,7 @@ export default function ChatPage() {
         </Conversation>
 
         <PromptInput onSubmit={handleSubmit} className="mt-6">
-          <PromptInputBody>
+          <PromptInputBody data-align="block-end">
             <PromptInputTextarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -278,6 +278,11 @@ export default function ChatPage() {
   );
 }
 ```
+
+:::message
+**`data-align="block-end"` の役割**
+AI Elements の `InputGroup`（`PromptInputBody` の親）はデフォルトで高さが `h-8`（32px）に固定されており、そのままだと textarea の `min-h-16`（64px）が `overflow: hidden` で切られて、プレースホルダーが下半分見切れます。`data-align="block-end"` を直下要素に付けると `has-[>[data-align=block-end]]:h-auto` が効いて、ラッパーが内容に合わせて伸びるようになります。
+:::
 
 ---
 
