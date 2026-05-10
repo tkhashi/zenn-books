@@ -81,4 +81,4 @@ ollama stop gemma4:e4b
 ollama run qwen3.6:27b
 ```
 
-確認できたら、次章（トラブルシューティング）に進みます。
+確認できたら、次章（Mastra + Next.js でアプリ開発）に進みます。

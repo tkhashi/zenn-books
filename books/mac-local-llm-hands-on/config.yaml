@@ -1,6 +1,6 @@
 title: "MacBook Pro M シリーズで始める ローカル LLM ハンズオン"
-summary: "Ollama を使って MacBook Pro（M シリーズ）でローカル LLM を動かすハンズオンガイドです。PC スペックに応じてコース（Lite / Standard / Pro）を選び、マルチモーダルチャットと VS Code でのコーディング支援を体験できます。"
-topics: ["ollama", "llm", "mac", "gemma", "vscode"]
+summary: "Ollama を使って MacBook Pro（M シリーズ）でローカル LLM を動かすハンズオンガイドです。PC スペックに応じてコース（Lite / Standard / Pro）を選び、マルチモーダルチャット、VS Code でのコーディング支援、Mastra + Next.js での自作チャットアプリ開発までを体験できます。"
+topics: ["ollama", "llm", "mac", "gemma", "mastra"]
 published: false
 price: 0
 toc_depth: 2
@@ -14,5 +14,6 @@ chapters:
   - 06_coding_assistant
   - 07_coding_exercises
   - 08_model_comparison
-  - 09_troubleshooting
-  - 10_cleanup
+  - 09_mastra_app
+  - 10_troubleshooting
+  - 11_cleanup
