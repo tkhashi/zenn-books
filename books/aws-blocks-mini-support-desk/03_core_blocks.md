@@ -1,5 +1,5 @@
 ---
-title: "認証・データ・ファイル・観測 — Blocks 基礎4種"
+title: "[本編] 認証・データ・ファイル・観測 — Blocks 基礎4種"
 free: true
 ---
 
@@ -216,6 +216,34 @@ const attachments = new FileBucket(scope, 'attachments');
 `attachments.get(path)` でファイル本体を読むこともできますが、**存在しないときは例外ではなく `null` が返る**点に注意してください。キーに `/` 以外の特殊文字（メールアドレスなど）が入るときは `encodeURIComponent` で包むのが安全です。
 :::
 
+#### 責務の境界（Auth / FileBucket / アプリ）
+
+ここは AWS Blocks を理解するうえで大事なポイントです。`FileBucket` は **presigned URL を発行する Block** ですが、「このユーザーがこのファイルを取得してよいか」という**所有者判定は自動では行いません**。`auth.requireAuth(context)` も、あくまで**ログイン済みであることを確認するだけ**です。チケットや添付ファイルの所有者チェックは**アプリ側の責任**です。
+
+役割を整理すると次のとおりです。
+
+- **`AuthCognito`** … 認証（ログインしているか、誰か）を担当する
+- **`FileBucket`** … ファイル保存と presigned URL の発行を担当する
+- **アプリ（API handler）** … 「この人がこのリソースを触ってよいか」の認可判定を担当する
+
+そのため、ダウンロード URL を発行するときは、**クライアントから渡された `key` をそのまま信用しない**のが安全です。チケット ID から DB を引き、`owner_sub = user.userSub` を確認したうえで、保存済みの `attachment_key` から URL を発行する、という流れにすると責務の分け方が分かりやすくなります。
+
+```typescript
+  // 責務境界を意識した安全な発行例（key を直接信用しない）
+  async getTicketAttachmentUrl(ticketId: string) {
+    const user = await auth.requireAuth(context);
+    const ticket = await db.queryOne<Ticket>(
+      sql`SELECT * FROM tickets WHERE id = ${ticketId} AND owner_sub = ${user.userSub}`
+    );
+    if (!ticket?.attachment_key) return { url: null };
+    return { url: await attachments.getUrl(ticket.attachment_key, { expiresIn: 600 }) };
+  },
+```
+
+:::message
+「ログイン済み = 全ファイルにアクセス可」ではありません。`requireAuth` の後ろに、必ず DB の `owner_sub` チェックを置くのがポイントです。
+:::
+
 ### Logger / Metrics / Dashboard — 観測する
 
 最後に観測まわりです。3 つとも `(scope, id, options)` の形で作れます。
@@ -282,6 +310,15 @@ const dashboard = new Dashboard(scope, 'dashboard', {
 - `Database` をマイグレーション付きで定義し、チケットの CRUD を `sql` テンプレートで書いた
 - `FileBucket` で署名付き URL を使った添付ファイルの仕組みを作った
 - `Logger` / `Metrics` / `Dashboard` で観測を組み込んだ（Dashboard はクラウド専用）
+
+## 完了条件
+
+- サインアップ、確認コード入力、サインインができる
+- ログイン後にチケットを作成できる
+- 自分のチケット一覧を取得できる
+- `Logger` / `Metrics` の出力をローカルターミナルで確認できる
+- 添付ファイルの upload URL / download URL を発行できる
+- `Dashboard` はローカルでは実体を持たず、実 AWS で確認するものだと理解できる
 
 ## 次の章でやること
 

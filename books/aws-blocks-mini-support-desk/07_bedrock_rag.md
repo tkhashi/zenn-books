@@ -1,5 +1,5 @@
 ---
-title: "Bedrock RAG — ドキュメント検索と回答案生成"
+title: "[任意・課金あり] Bedrock RAG — ドキュメント検索と回答案生成"
 free: true
 ---
 
@@ -23,6 +23,10 @@ Agent が回答案を生成
   ↓
 画面に表示
 ```
+
+:::message alert
+この章の **sandbox / Bedrock 実行**は AWS アカウント・Bedrock のモデルアクセス・課金が必要です。**公開時点では未検証**（手順紹介）です。ローカル部分（`KnowledgeBase` の TF-IDF 検索・`Agent` の canned 応答）は AWS なしで確認できます。
+:::
 
 第3〜4章まではローカルモックだけで動きました。RAG も**ローカルで開発・確認**できます。実 Bedrock での確認だけ sandbox を使います。
 
@@ -197,8 +201,19 @@ KnowledgeBase・ベクトルストア・Aurora などがまとめて削除され
 
 - 参照ドキュメントを用意し、`KnowledgeBase` で検索した（ローカルは TF-IDF・日本語の制約を理解）
 - `Agent` に検索ツールを持たせ、回答案を生成した（ローカルは canned）
-- sandbox で実 Bedrock を有効化し、本物の埋め込み検索と生成を確認した
+- sandbox で実 Bedrock を有効化し、埋め込み検索と生成を確認する流れを理解した（**公開時点では未検証**）
 - ローカルモックと実 Bedrock の差を理解した
+
+## 完了条件
+
+ローカル（AWS 不要）で次が満たせていれば、この章の本編部分は完了です。
+
+- ローカルで `KnowledgeBase.retrieve()` を呼び出せる
+- ローカルの `Agent` が canned 応答を返すことを確認できる
+- ローカル KnowledgeBase は TF-IDF ベースの簡易検索であり、実 Bedrock の意味検索とは違うと説明できる
+- sandbox 実行は任意・課金ありであることを理解できる
+
+> sandbox / Bedrock の実行（取り込み完了・canned ではない回答案）は公開時点で未検証のため、完了条件には含めていません。実行する場合の確認観点は本文「sandbox で Bedrock を実行する」を参照してください。
 
 ## 次の章でやること
 

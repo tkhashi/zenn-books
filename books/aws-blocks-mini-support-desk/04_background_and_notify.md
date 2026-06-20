@@ -1,5 +1,5 @@
 ---
-title: "非同期・定期処理とメール通知"
+title: "[本編] 非同期・定期処理とメール通知"
 free: true
 ---
 
@@ -178,6 +178,14 @@ new CronJob(scope, 'open-ticket-report', {
 - `CronJob` で open チケット数を定期集計した（タイムゾーン指定込み）
 - `EmailClient` で通知メールを送った（ローカルはコンソール出力）
 - `notification_logs` テーブルを追加した
+
+## 完了条件
+
+- チケット作成後に `AsyncJob` が呼び出される
+- ローカルターミナルで job handler のログ（`notification sent`）を確認できる
+- `CronJob` のローカル実行タイミングを確認できる
+- `EmailClient` のローカル出力（`[Email:mail]`）を確認できる
+- local と AWS で `AsyncJob` / `CronJob` の実体が異なる（インプロセス vs SQS+Lambda / タイマー vs EventBridge）ことを説明できる
 
 ## 次の章でやること
 
