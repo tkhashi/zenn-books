@@ -2,6 +2,20 @@
 
 > レビューフィードバック反映済み確定版
 
+> **【2026-06 更新メモ：実 API・章統合の反映】**
+> 本文執筆にあたり、実在する `@aws-blocks/*` フレームワーク（npm scope、v0.1.x）を `create-blocks-app` でスカフォールドして API を検証した。その結果、本仕様書の一部記述は実 API と差異があったため、**最新の正典は `books/aws-blocks-mini-support-desk/` の各章本文**とする。主な確定事項：
+> - パッケージは `@aws-blocks/blocks`（アンブレラ）から `Scope` / `ApiNamespace` / 各 Block をインポート。フロントは `aws-blocks` エイリアス。
+> - 構成は `new Scope('mini-support-desk')` → `new ApiNamespace(scope, 'api', (context) => ({ ... }))`。API は JSON-RPC（REST ではない）。
+> - `Database` は PostgreSQL（ローカル PGlite / 本番 Aurora）。テーブルは番号付き `.sql` マイグレーション。`.bb-data` はローカルモックの永続先。
+> - 認証はメソッド単位オプトイン（`auth.requireAuth(context)`）。`AuthCognito` はサインアップ後に確認コードが必要（ローカルは `codeDelivery` フックで出力）。
+> - CDK layer は `index.cdk.ts` で `blocksStack.handler` に権限・env を付与。`Pipeline` は `@aws-blocks/core/cdk`（アンブレラ経由）の construct。
+> - `Agent` はローカル既定で canned provider、Ollama は `provider: 'openai-api'`。`KnowledgeBase` のローカル検索は TF-IDF（日本語の精度は実 Bedrock と異なる）。
+>
+> **章構成は 9 章に統合した**（旧 3-6 / 7-9 / 10-12 / 13-14 / 15-18 をそれぞれ 1 章に集約）。新構成は `config.yaml` を参照：
+> `01_introduction, 02_create_project, 03_core_blocks, 04_background_and_notify, 05_cdk_layer, 06_pipeline, 07_bedrock_rag, 08_ollama_local, 09_summary`。
+>
+> 以下の「7. Book 全体構成」以降の旧 20 章構成は、設計意図の記録として残す。
+
 ## 1. Book の目的
 
 本 Book は、AWS Blocks を初めて使う TypeScript アプリケーションエンジニア向けに、ローカル開発から sandbox デプロイ、CDK layer による拡張、Bedrock RAG までを段階的に体験できるハンズオンとして構成する。

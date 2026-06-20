@@ -1,5 +1,5 @@
 title: "アプリエンジニアのためのAWS Blocksハンズオン"
-summary: "AWS Blocksを使って、Cognito認証、Database、FileBucket、Observability、AsyncJob、CronJob、EmailClient、Pipeline、CDK layer、SQS、Step Functions、Bedrock RAGを段階的に学ぶTypeScriptハンズオンです。"
+summary: "AWS Blocks を使って、Cognito 認証・Database・FileBucket・Observability・AsyncJob・CronJob・EmailClient・CDK layer（SQS / Step Functions / CloudWatch）・Pipeline・Bedrock RAG（KnowledgeBase / Agent）を段階的に学ぶ TypeScript ハンズオンです。ローカルモックだけで動かせます。"
 topics: ["aws", "typescript", "cdk", "serverless", "bedrock"]
 published: false
 price: 0
@@ -7,21 +7,10 @@ toc_depth: 2
 chapters:
   - 01_introduction
   - 02_create_project
-  - 03_auth_cognito
-  - 04_database_ticket
-  - 05_filebucket_attachment
-  - 06_observability
-  - 07_async_job
-  - 08_cron_job
-  - 09_email_client
-  - 10_sqs_stepfunctions
-  - 11_sandbox_cdk
-  - 12_cloudwatch_alarm_sns
-  - 13_pipeline_synth
-  - 14_pipeline_deploy_optional
-  - 15_rag_overview_documents
-  - 16_knowledge_base_local
-  - 17_agent_answer
-  - 18_bedrock_sandbox
-  - 19_ollama_local
-  - 20_summary
+  - 03_core_blocks
+  - 04_background_and_notify
+  - 05_cdk_layer
+  - 06_pipeline
+  - 07_bedrock_rag
+  - 08_ollama_local
+  - 09_summary
