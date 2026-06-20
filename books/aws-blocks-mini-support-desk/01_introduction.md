@@ -1,5 +1,5 @@
 ---
-title: "AWS Blocks で作る Mini Support Desk の全体像"
+title: "[本編] AWS Blocks で作る Mini Support Desk の全体像"
 free: true
 ---
 
@@ -122,6 +122,44 @@ Pipeline（第6章で定義）
 ```
 
 アプリの作り込み自体は目的ではありません。**各 Block を自然に差し込める題材**として Mini Support Desk を使う、という位置づけです。
+
+## この Book の進め方（本編と任意章）
+
+この Book は **01〜04章を本編**とし、**AWS アカウントなしで** AWS Blocks の基本的な開発体験をつかめる構成にしています。05章以降は任意です。実 AWS・Bedrock・CodePipeline・Ollama などを扱うため、アカウント設定・課金・外部依存が発生します。05章以降を飛ばしても、AWS Blocks の基本は本編だけで学べます。
+
+各章のタイトルに区分を付けています。
+
+| 区分 | 章 | 内容 |
+|---|---|---|
+| 本編 | 01〜04章 | ローカルモックで完結。AWS 不要 |
+| 任意・課金あり | 05章 | CDK layer を sandbox（実 AWS）で確認 |
+| 任意 | 06章 | Pipeline を `cdk synth` まで（実デプロイは任意） |
+| 任意・課金あり | 07章 | Bedrock RAG を sandbox（実 Bedrock）で確認 |
+| おまけ | 08章 | Ollama でローカル LLM |
+| まとめ | 09章 | 振り返りとトラブルシューティング |
+
+:::message
+**検証範囲について。** 本 Book のサンプルは、ローカルモックで動く範囲（01〜04章のバックエンドとフロント）を著者環境で動作確認しています。実 AWS・Bedrock・Ollama を使う 05〜08章は、公開時点では**未検証（手順紹介）**です。各章でその旨を明記しています。「著者環境で成功済み」か「手順紹介のみ」かを区別して読み進めてください。
+:::
+
+## 検証環境
+
+この Book は次の環境を前提にしています。AWS Blocks は Preview のため、最新バージョンでは API や生成されるテンプレートが変わる可能性があります。再現性のため、サンプルリポジトリの `package-lock.json` に固定された AWS Blocks バージョンを基準にしてください。
+
+- **Node.js**: 22.x（`>=22.0.0`）
+- **npm**: 10.x 以上（`>=10.0.0`）
+- **AWS Blocks**: `package-lock.json` に固定（検証時点で `@aws-blocks/blocks@0.1.2`）
+- **AWS CLI**: v2（05章以降で実 AWS を使う場合）
+- **AWS CDK**: `aws-cdk-lib@2.260.0`（`package.json` / lockfile のバージョン）
+
+## 参照
+
+- [AWS Blocks Developer Guide](https://docs.aws.amazon.com/blocks/latest/devguide/what-is-blocks.html)
+- [Getting started with AWS Blocks](https://docs.aws.amazon.com/blocks/latest/devguide/getting-started.html)
+- [Deploy your application to AWS](https://docs.aws.amazon.com/blocks/latest/devguide/deploy-to-aws.html)
+- [AWS Blocks concepts](https://docs.aws.amazon.com/blocks/latest/devguide/concepts.html)
+- [AWS Blocks GitHub Repository](https://github.com/aws-devtools-labs/aws-blocks)
+- [create-blocks-app README](https://github.com/aws-devtools-labs/aws-blocks/blob/main/packages/create-blocks-app/README.md)
 
 :::message
 **フロントエンドコードについて**

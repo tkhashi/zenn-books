@@ -1,5 +1,5 @@
 ---
-title: "CDK layer で AWS リソースを追加する（SQS + Step Functions / sandbox / Alarm）"
+title: "[任意・課金あり] CDK layer で AWS リソースを追加する（SQS + Step Functions / sandbox / Alarm）"
 free: true
 ---
 
@@ -10,18 +10,35 @@ free: true
 この章では次を行います。
 
 1. CDK layer の考え方（3 ステップ）を理解する
-2. 重要チケット（high）向けに **SQS + Step Functions** のワークフローを追加する
-3. 初めて **sandbox** で実 AWS にデプロイして動作確認する
+2. 重要チケット（high）向けに **SQS + Step Functions** のワークフロー**骨格**を追加する
+3. 初めて **sandbox** で実 AWS にデプロイして動作確認する手順を理解する
 4. **CloudWatch Alarm + SNS** で運用アラートを追加する
 
 :::message alert
 **この章は実 AWS を使います。** CDK layer で追加したリソースはローカルモックがないため、動作確認は sandbox（実 AWS デプロイ）で行います。AWS アカウントが必要で、**実費用が発生**します。章末の「費用の目安」と「リソースの削除」を必ず確認してください。
+
+なお、**この章の sandbox 実行（実 AWS）は公開時点では未検証**です。コード例と手順を提示しています。実行する場合は、章末の確認観点に沿って検証し、完了後に `npm run sandbox:destroy` で必ず削除してください。
 :::
 
 ## 前提
 
-- AWS アカウントと、CLI で使える認証情報（`aws configure` 済みなど）
 - 第4章までの実装
+- AWS アカウントと、CLI で使える認証情報
+- **AWS CLI v2 が設定済み**であること
+- `aws sts get-caller-identity` でアカウント情報が取得できること
+- 初回のみ、対象アカウント・リージョンで **CDK bootstrap 済み**であること
+
+`npm run sandbox` の前に、認証と bootstrap を確認しておきます。
+
+```bash
+# 認証確認（アカウント ID などが返ればOK）
+aws sts get-caller-identity
+
+# 初回のみ: 対象アカウント・リージョンを bootstrap する
+npx cdk bootstrap aws://ACCOUNT_ID/REGION
+```
+
+CDK bootstrap は、AWS アカウントとリージョンの組み合わせごとに**初回 1 回だけ**必要です。すでに同じアカウント・リージョンで実行済みの場合は不要です。
 
 ## CDK layer とは
 
@@ -86,8 +103,12 @@ CREATE TABLE workflow_logs (
 
 ```text
 high チケット作成 → SQS にメッセージ → Step Functions 起動
-  → validate → mark triage_required → send notification → workflow_logs に記録
+  → validate(Pass) → markTriageRequired(Pass) → sendNotification(Pass)
 ```
+
+:::message
+この章の Step Functions は、CDK layer で **SQS・EventBridge Pipes・Step Functions を接続する形**を学ぶための**骨格**です。各ステップは `Pass` 状態（何もせず通過する状態）であり、DB 更新・通知送信・`workflow_logs` への記録といった**実処理は行いません**。実務では各 `Pass` を `sfn-tasks` の `LambdaInvoke` などに置き換えて実処理を割り当てます。本章の目的は「CDK layer によるリソース接続の学習」です。
+:::
 
 `index.cdk.ts` の `blocksStack` 作成後に、リソースを定義します。
 
@@ -257,10 +278,23 @@ npm run sandbox:destroy
 ## この章でできたこと
 
 - CDK layer の 3 ステップ（作る・権限・環境変数）を理解した
-- SQS + Step Functions で high チケットのワークフローを追加した
-- sandbox にデプロイして実 AWS で動作確認した
+- SQS + Step Functions で high チケット向けワークフローの**骨格**を追加した（各ステップは `Pass`）
+- sandbox にデプロイして実 AWS で確認する手順を理解した（**公開時点では実 AWS 未検証**）
 - CloudWatch Alarm + SNS で運用アラートを追加した
-- 費用を理解し、`sandbox:destroy` で後片付けした
+- 費用を理解し、`sandbox:destroy` で後片付けする流れを把握した
+
+## 完了条件
+
+この章は公開時点では**実 AWS 未検証**です。実行する場合は、次を確認してください。
+
+- `aws sts get-caller-identity` が成功する
+- 対象アカウント・リージョンで CDK bootstrap が済んでいる
+- `npm run sandbox` が成功する
+- SQS / EventBridge Pipes / Step Functions / SNS / CloudWatch Alarm が作成される
+- high チケット作成時に SQS へメッセージが送信される
+- EventBridge Pipes 経由で Step Functions execution が起動し、各ステップが `Pass` として成功する
+- SNS 購読確認メールを承認できる
+- `npm run sandbox:destroy` でリソースを削除できる
 
 ## 次の章でやること
 
