@@ -50,7 +50,7 @@ npm install
 バックエンドの Block は **`@aws-blocks/blocks`** という 1 つのパッケージに含まれています。`AuthCognito` も `Database` も、すべてここからインポートします。
 
 :::message
-AWS Blocks は Preview のため、バージョンによって API や生成テンプレートが変わる可能性があります。サンプルリポジトリでは `@aws-blocks/blocks` を `package-lock.json` で固定しています（第1章「検証環境」参照。検証時点で `@aws-blocks/blocks@0.1.2`）。手元のバージョンと挙動が違う場合は、固定バージョンを基準に確認してください。
+AWS Blocks は Preview のため、バージョンによって API や生成テンプレートが変わる可能性があります。サンプルリポジトリ `api-namespace/` では `@aws-blocks/blocks` を `package-lock.json` で固定しています（第1章「検証環境」参照。検証時点で `@aws-blocks/blocks@0.1.2`）。手元のバージョンと挙動が違う場合は、固定バージョンを基準に確認してください。
 :::
 
 ### ディレクトリ構成を理解する

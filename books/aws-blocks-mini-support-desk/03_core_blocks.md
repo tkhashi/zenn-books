@@ -296,7 +296,7 @@ const dashboard = new Dashboard(scope, 'dashboard', {
 3. サインインすると、チケットを作成・一覧できます。
 4. チケットを作成すると、ターミナルに `RequestCreated` メトリクスのログと `ticket created` のログが出ます。
 
-フロントエンドのコード（フォームや一覧 UI）はサンプルリポジトリの `src/` を参照してコピーしてください。バックエンドの呼び出しは、すべて `import { api, authApi } from 'aws-blocks'` 経由です。
+フロントエンドのコード（フォームや一覧 UI）はサンプルリポジトリ `api-namespace/` の `src/` を参照してコピーしてください。バックエンドの呼び出しは、すべて `import { api, authApi } from 'aws-blocks'` 経由です。
 
 未ログインで `createTicket` を呼ぶと、次のように `401` が返ることも確認できます。
 
