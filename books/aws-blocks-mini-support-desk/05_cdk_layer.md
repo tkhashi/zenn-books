@@ -1,5 +1,5 @@
 ---
-title: "[任意・課金あり] CDK layer で AWS リソースを追加する（SQS + Step Functions / sandbox / Alarm）"
+title: "[任意・課金あり] CDK layer で AWS リソースを追加する（SQS・Step Functions）"
 free: true
 ---
 
