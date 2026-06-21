@@ -13,4 +13,5 @@ chapters:
   - 06_pipeline
   - 07_bedrock_rag
   - 08_ollama_local
-  - 09_summary
+  - 09_raw_route
+  - 10_summary
