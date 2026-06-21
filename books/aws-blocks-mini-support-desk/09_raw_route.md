@@ -13,7 +13,7 @@ AWS Blocks には、もう 1 つ別の API の公開方法があります。**`R
 
 :::message
 この章はおまけです。ローカルモックだけで完結します（AWS 不要）。
-**フル実装はサンプルリポジトリの別ブランチ [`example/raw-route`](https://github.com/tkhashi/aws-blocks-mini-support-desk/tree/example/raw-route) にあります。** `main`（これまで作ってきた `ApiNamespace` 版）はそのまま残し、RawRoute 版は別ブランチに分けています。差分は [Pull Request](https://github.com/tkhashi/aws-blocks-mini-support-desk/pull/3) でも確認できます。
+**フル実装はサンプルリポジトリの [`raw-route/`](https://github.com/tkhashi/aws-blocks-mini-support-desk/tree/main/raw-route) ディレクトリにあります。** リポジトリは、これまで作ってきた `ApiNamespace` 版の [`api-namespace/`](https://github.com/tkhashi/aws-blocks-mini-support-desk/tree/main/api-namespace) と、この章の RawRoute 版 `raw-route/` の、**型情報もデータも共有しない 2 つの独立プロジェクト**に分かれています。
 :::
 
 ## ApiNamespace と RawRoute の違い
@@ -117,7 +117,7 @@ new RawRoute(scope, 'tickets-create', {
 
 `ApiNamespace` のメソッドは、そのまま「メソッド＋パス」の RawRoute に 1 対 1 で置き換えられます。
 
-| `ApiNamespace`（main） | RawRoute（`example/raw-route`） |
+| `ApiNamespace`（`api-namespace/`） | RawRoute（`raw-route/`） |
 |---|---|
 | `api.createTicket(...)` | `POST /tickets` |
 | `api.listTickets()` | `GET /tickets` |
@@ -156,7 +156,7 @@ new RawRoute(scope, 'export-tickets-csv', {
 
 ## 動作確認（ローカル）
 
-`example/raw-route` ブランチで `npm run dev` を起動すれば、すべてローカルモックで確認できます。`curl` でセッション Cookie を保存しながら一連の流れを叩けます。
+`raw-route/` ディレクトリで `npm install && npm run dev` を起動すれば、すべてローカルモックで確認できます。`curl` でセッション Cookie を保存しながら一連の流れを叩けます。
 
 ```bash
 # サインアップ → 確認コード（ターミナルに出力）→ サインイン（Cookie をjarに保存）
@@ -192,7 +192,7 @@ curl       localhost:3001/tickets                  # Cookie なし → 401
 ## この章でできたこと
 
 - `ApiNamespace`（JSON-RPC）と `RawRoute`（生 HTTP）の違いを整理した
-- 認証を含む全 API を `RawRoute` で実装し直すと何がどう変わるかを理解した（フル実装は `example/raw-route` ブランチ）
+- 認証を含む全 API を `RawRoute` で実装し直すと何がどう変わるかを理解した（フル実装はサンプルの `raw-route/` ディレクトリ）
 - 認証は `AuthCognito` のメソッド＋セッション Cookie で再現でき、`requireAuth` の使い方は `ApiNamespace` と同じだと理解した
 - CSV エクスポートのような非 JSON レスポンスが `RawRoute` で素直に書けることを確認した
 

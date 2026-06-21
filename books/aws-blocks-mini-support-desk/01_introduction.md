@@ -145,7 +145,7 @@ Pipeline（第6章で定義）
 
 ## 検証環境
 
-この Book は次の環境を前提にしています。AWS Blocks は Preview のため、最新バージョンでは API や生成されるテンプレートが変わる可能性があります。再現性のため、サンプルリポジトリの `package-lock.json` に固定された AWS Blocks バージョンを基準にしてください。
+この Book は次の環境を前提にしています。AWS Blocks は Preview のため、最新バージョンでは API や生成されるテンプレートが変わる可能性があります。再現性のため、サンプルリポジトリ `api-namespace/` の `package-lock.json` に固定された AWS Blocks バージョンを基準にしてください。
 
 - **Node.js**: 22.x（`>=22.0.0`）
 - **npm**: 10.x 以上（`>=10.0.0`）
@@ -165,6 +165,8 @@ Pipeline（第6章で定義）
 :::message
 **フロントエンドコードについて**
 本 Book は AWS Blocks（バックエンド）の使い方に集中します。フロントエンド（React）のコードは要点だけ示し、詳細はサンプルリポジトリ [`tkhashi/aws-blocks-mini-support-desk`](https://github.com/tkhashi/aws-blocks-mini-support-desk) を参照してください。バックエンドのコードは本文にすべて掲載するので、写経すれば動きます。
+
+なお、このサンプルリポジトリは **2 つの独立したプロジェクト**で構成されています。本編（01〜08章）は `api-namespace/`（`ApiNamespace` 版）、おまけの 09章は `raw-route/`（`RawRoute` 版）です。本編を進めるときは `api-namespace/` を参照してください。
 :::
 
 ## この章でできたこと
